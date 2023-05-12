@@ -21,11 +21,12 @@ namespace Link.Slicer.Services
         
         public async Task<string> RedicrectAsync(HttpRequest request)
         {
+            // Возвращать результат скорее всего
             var address = request.Path.Value?.Replace(@"/", "");
             var query = new UrlFindQuery { Address = address };
 
             var entity = await _repository.GetAsync(query);
-            if (entity == null)
+            if (entity == null) // Возвращать 404
                 throw new Exception("There is no url found.");
 
             return entity.Target;
@@ -39,6 +40,8 @@ namespace Link.Slicer.Services
                 throw new ArgumentNullException(string.Format(Resource.CanNotBeNull, nameof(model.Url)));
             if (string.IsNullOrEmpty(model.Shortening)) 
                 throw new ArgumentNullException(string.Format(Resource.CanNotBeNull, nameof(model.Shortening)));
+
+            // Валидация, если адрес другой, но домен и таргет одинаковые
 
             var domainName = UrlHelper.GetDomain(model.Url);
             var query = new UrlFindQuery
