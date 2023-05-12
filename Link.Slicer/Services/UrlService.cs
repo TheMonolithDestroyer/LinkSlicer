@@ -1,19 +1,12 @@
-﻿using Link.Slicer.Database;
-using Link.Slicer.Entities;
+﻿using Link.Slicer.Entities;
 using Link.Slicer.Models;
+using Link.Slicer.Queries;
+using Link.Slicer.Repositories;
 using Link.Slicer.Utils;
 using Microsoft.Extensions.Options;
-using System.Net;
-using System.Text.RegularExpressions;
 
 namespace Link.Slicer.Services
 {
-    public interface IUrlService
-    {
-        Task<Result<string>> RedicrectAsync(HttpRequest request);
-        Task<UrlCreateResponse> CreateAsync(UrlCreateRequest model);
-    }
-
     public class UrlService : IUrlService
     {
         private readonly IOptions<AppSettings> _options;
@@ -26,41 +19,46 @@ namespace Link.Slicer.Services
             _repository = repository ?? throw new ArgumentNullException();
         }
         
-        public async Task<Result<string>> RedicrectAsync(HttpRequest request)
+        public async Task<string> RedicrectAsync(HttpRequest request)
         {
-            var path = request.Path.Value?.Replace(@"/", "");
-            var domainName = request.Host.Value;
-            var protocol = request.Scheme;
+            var address = request.Path.Value?.Replace(@"/", "");
+            var query = new UrlFindQuery { Address = address };
 
-            var urlEntity = await _repository.GetAsync(path);
-            if (urlEntity == null)
+            var entity = await _repository.GetAsync(query);
+            if (entity == null)
                 throw new Exception("There is no url found.");
 
-            return Result.Succeed(urlEntity.Target, HttpStatusCode.Redirect);
+            return entity.Target;
         }
 
         public async Task<UrlCreateResponse> CreateAsync(UrlCreateRequest model)
         {
-            if (model == null)
-                throw new ArgumentNullException(nameof(UrlCreateRequest));
+            if (model == null) 
+                throw new ArgumentNullException(string.Format(Resource.CanNotBeNull, nameof(model)));
+            if (string.IsNullOrEmpty(model.Url)) 
+                throw new ArgumentNullException(string.Format(Resource.CanNotBeNull, nameof(model.Url)));
+            if (string.IsNullOrEmpty(model.Shortening)) 
+                throw new ArgumentNullException(string.Format(Resource.CanNotBeNull, nameof(model.Shortening)));
 
-            if (string.IsNullOrEmpty(model.Address))
-                throw new ArgumentNullException("Address can not be null or empty.", nameof(model.Address));
+            var domainName = UrlHelper.GetDomain(model.Url);
+            var query = new UrlFindQuery
+            {
+                Address = model.Shortening,
+                DomainName = domainName
+            };
 
-            model.DomainName = GetDomain(model.Target);
-
-            var entity = await _repository.GetAsync(model.DomainName, model.Address, model.Target);
+            var entity = await _repository.GetAsync(query);
             if (entity == null)
             {
                 entity = new Url
                 {
                     CreatedAt = DateTimeOffset.Now.ToTimestamp(),
                     UpdatedAt = DateTimeOffset.Now.ToTimestamp(),
-                    DomainName = model.DomainName,
-                    Address = model.Address,
-                    Target = model.Target,
-                    Description = model.Description,
-                    Protocol = GetProtocol(model.Target)
+                    DomainName = domainName,
+                    Address = model.Shortening,
+                    Target = model.Url,
+                    Description = model.Comment,
+                    Protocol = UrlHelper.GetScheme(model.Url)
                 };
                 _repository.Insert(entity);
                 _repository.Commit();
@@ -68,47 +66,10 @@ namespace Link.Slicer.Services
 
             return new UrlCreateResponse
             {
-                ShortUrl = GenerateShortUrl(entity.Protocol, entity.Address),
+                ShortUrl = UrlHelper.GenerateShortUrl(_options.Value.DefaultDomain, entity.Address),
                 Description = entity.Description,
                 CreatedAt = entity.CreatedAt.ToDateTime()
             };
-        }
-
-        private string GetDomain(string target)
-        {
-            if (string.IsNullOrEmpty(target))
-                throw new ArgumentNullException("Target url can not be null or empty.", nameof(target));
-
-            var uri = new Uri(target);
-            var domain = uri.Host;
-
-            return domain;
-        }
-
-        private string GetProtocol(string target)
-        {
-            if (string.IsNullOrEmpty(target))
-                throw new ArgumentNullException("Target url can not be null or empty.", nameof(target));
-
-            var uri = new Uri(target);
-            var protocol = uri.Scheme;
-
-            return protocol;
-        }
-
-        private string AddProtocol(string url)
-        {
-            if (string.IsNullOrEmpty(url))
-                throw new ArgumentNullException("Url url can not be null or empty.", nameof(url));
-
-            var hasProtocol = Regex.IsMatch(url, @"^\w+:\/\/");
-            return hasProtocol ? url : $"http://{url}";
-        }
-
-        private string GenerateShortUrl(string protocol, string address)
-        {
-            var domain = GetDomain(_options.Value.DefaultDomain);
-            return $"{protocol}://{domain}/{address}";
         }
     }
 }

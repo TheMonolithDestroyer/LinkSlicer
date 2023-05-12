@@ -23,12 +23,11 @@ namespace Link.Slicer.Controllers
         }
 
         [HttpGet]
-        [Route("/s7")]
-        public async Task<IActionResult> RedirectTo()
+        [Route("/{shortening}")]
+        public async Task<IActionResult> Redirect()
         {
             var result = await _service.RedicrectAsync(Request);
-
-            return Redirect(result.Data);
+            return new RedirectResult(result);
         }
     }
 }
