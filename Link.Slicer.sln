@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Link.Slicer", "Link.Slicer\Link.Slicer.csproj", "{38C94D21-0441-41E8-990A-8E03F3F186F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Link.Slicer", "Link.Slicer\Link.Slicer.csproj", "{38C94D21-0441-41E8-990A-8E03F3F186F0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4217F27A-641D-45B0-9B86-87664A0DD5A6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{605C9CFE-3D59-47C7-8676-85A2A06CFD99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Link.Slicer.Domain", "Link.Slicer.Domain\Link.Slicer.Domain.csproj", "{C70242FD-1888-4B05-8F41-A56D0D5A42F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +21,17 @@ Global
 		{38C94D21-0441-41E8-990A-8E03F3F186F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38C94D21-0441-41E8-990A-8E03F3F186F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38C94D21-0441-41E8-990A-8E03F3F186F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C70242FD-1888-4B05-8F41-A56D0D5A42F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C70242FD-1888-4B05-8F41-A56D0D5A42F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C70242FD-1888-4B05-8F41-A56D0D5A42F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C70242FD-1888-4B05-8F41-A56D0D5A42F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{38C94D21-0441-41E8-990A-8E03F3F186F0} = {4217F27A-641D-45B0-9B86-87664A0DD5A6}
+		{C70242FD-1888-4B05-8F41-A56D0D5A42F7} = {4217F27A-641D-45B0-9B86-87664A0DD5A6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ACB64BAD-FA31-4697-BB59-CB8477482985}
