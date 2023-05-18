@@ -25,8 +25,8 @@ namespace Link.Slicer.Infrastructure.Migrations
                     DomainName = table.Column<string>(type: "text", nullable: false),
                     Address = table.Column<string>(type: "text", nullable: true),
                     Comment = table.Column<string>(type: "text", nullable: true),
-                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
-                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     DeletedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>

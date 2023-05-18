@@ -1,6 +1,6 @@
-﻿namespace Link.Slicer.Utils
+﻿namespace Link.Slicer.Configurations
 {
-    public static class RoutingExtension
+    public static class RoutingConfig
     {
         public static void UseRoutingEnpoints(this WebApplication app)
         {

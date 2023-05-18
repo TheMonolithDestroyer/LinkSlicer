@@ -1,15 +1,14 @@
-﻿using Link.Slicer.Models;
+﻿using Link.Slicer.Infrastructure.Settings;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
-using System.Reflection;
 
-namespace Link.Slicer.Utils
+namespace Link.Slicer.Configurations
 {
-    public static class SwaggerExtension
+    public static class SwaggerConfig
     {
-        public static void AddSwagger(this IServiceCollection services)
+        public static void AddSwagger(this WebApplicationBuilder builder)
         {
-            services.AddSwaggerGen(options =>
+            builder.Services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {

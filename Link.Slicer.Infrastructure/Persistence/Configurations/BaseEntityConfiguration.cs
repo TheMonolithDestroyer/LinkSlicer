@@ -15,8 +15,6 @@ namespace Link.Slicer.Infrastructure.Persistence.Configurations
             builder.HasKey(e => e.Id);
             builder.HasIndex(e => e.Id).IsUnique();
             builder.Property(p => p.Id).HasDefaultValueSql("uuid_generate_v4()");
-            builder.Property(p => p.CreatedAt).IsRequired().HasDefaultValueSql("now()");
-            builder.Property(p => p.UpdatedAt).IsRequired().HasDefaultValueSql("now()");
         }
     }
 }

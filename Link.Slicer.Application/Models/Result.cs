@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Net;
 
-namespace Link.Slicer.Models
+namespace Link.Slicer.Application.Models
 {
     public class Result
     {

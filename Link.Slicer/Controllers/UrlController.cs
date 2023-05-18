@@ -1,5 +1,5 @@
-﻿using Link.Slicer.Models;
-using Link.Slicer.Services;
+﻿using Link.Slicer.Application.Models;
+using Link.Slicer.Application.Services.UrlService;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -16,7 +16,7 @@ namespace Link.Slicer.Controllers
 
         [HttpPost]
         [Route("api/[controller]/[action]")]
-        public async Task<IActionResult> Create([FromBody]UrlCreateRequest request)
+        public async Task<IActionResult> Create([FromBody]CreateUrlCommandRequest request)
         {
             var result = await _service.CreateAsync(request);
             return StatusCode((int)HttpStatusCode.Created, Result.Succeed(result, HttpStatusCode.Created));
@@ -26,7 +26,7 @@ namespace Link.Slicer.Controllers
         [Route("/{shortening}")]
         public async Task<IActionResult> Redirect()
         {
-            var result = await _service.RedicrectAsync(Request);
+            var result = await _service.RedicrectAsync(Request.Path);
             return new RedirectResult(result);
         }
     }

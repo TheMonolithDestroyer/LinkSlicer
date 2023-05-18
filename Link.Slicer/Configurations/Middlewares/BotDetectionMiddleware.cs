@@ -2,7 +2,7 @@
 using System.Net;
 using UAParser;
 
-namespace Link.Slicer.Middlewares
+namespace Link.Slicer.Configurations.Middlewares
 {
     public class BotDetectionMiddleware
     {

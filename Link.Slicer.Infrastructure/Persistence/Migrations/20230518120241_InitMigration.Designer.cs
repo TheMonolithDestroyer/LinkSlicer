@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Link.Slicer.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230518111335_InitMigration")]
+    [Migration("20230518120241_InitMigration")]
     partial class InitMigration
     {
         /// <inheritdoc />
@@ -40,9 +40,7 @@ namespace Link.Slicer.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("now()");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTimeOffset?>("DeletedAt")
                         .HasColumnType("timestamp with time zone");
@@ -63,9 +61,7 @@ namespace Link.Slicer.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("now()");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 

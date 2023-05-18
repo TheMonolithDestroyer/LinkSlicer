@@ -37,9 +37,7 @@ namespace Link.Slicer.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("now()");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTimeOffset?>("DeletedAt")
                         .HasColumnType("timestamp with time zone");
@@ -60,16 +58,14 @@ namespace Link.Slicer.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("timestamp with time zone")
-                        .HasDefaultValueSql("now()");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Id")
                         .IsUnique();
 
-                    b.ToTable("Urls", (string)null);
+                    b.ToTable("Urls");
                 });
 #pragma warning restore 612, 618
         }

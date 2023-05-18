@@ -1,4 +1,4 @@
-﻿namespace Link.Slicer.Utils
+﻿namespace Link.Slicer.Application.Common.Extensions
 {
     public static class DateTimeExtension
     {
