@@ -19,6 +19,16 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
+    "Webtracker.Reader.Api.Test": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": false,
+      "launchUrl": "swagger/index.html",
+      "applicationUrl": "http://localhost:7166",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Test"
+      }
+    },
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": false,
