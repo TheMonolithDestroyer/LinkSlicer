@@ -8,17 +8,13 @@ namespace Link.Slicer.Domain.Entities
     public class Url : BaseEntity
     {
         /// <summary>
-        /// Первичный ключ
-        /// </summary>
-        public Guid UrlId { get; set; }
-        /// <summary>
         /// Ключ сокращения
         /// </summary>
         public string Shortening { get; set; }
         /// <summary>
         /// Срок годности
         /// </summary>
-        public long? ExpiresIn { get; set; }
+        public DateTimeOffset? ExpiresAt { get; set; }
         /// <summary>
         /// Протокол
         /// </summary>

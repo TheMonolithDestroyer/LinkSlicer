@@ -9,9 +9,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4217F27A-641
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{605C9CFE-3D59-47C7-8676-85A2A06CFD99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Link.Slicer.Domain", "Link.Slicer.Domain\Link.Slicer.Domain.csproj", "{C70242FD-1888-4B05-8F41-A56D0D5A42F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Link.Slicer.Domain", "Link.Slicer.Domain\Link.Slicer.Domain.csproj", "{C70242FD-1888-4B05-8F41-A56D0D5A42F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Link.Slicer.Application", "Link.Slicer.Application\Link.Slicer.Application.csproj", "{322165DE-B2A8-47CB-93F5-135810D4F370}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Link.Slicer.Application", "Link.Slicer.Application\Link.Slicer.Application.csproj", "{322165DE-B2A8-47CB-93F5-135810D4F370}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Link.Slicer.Infrastructure", "Link.Slicer.Infrastructure\Link.Slicer.Infrastructure.csproj", "{E8505679-7E8E-438E-BDF5-719FC71B6909}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,10 @@ Global
 		{322165DE-B2A8-47CB-93F5-135810D4F370}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{322165DE-B2A8-47CB-93F5-135810D4F370}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{322165DE-B2A8-47CB-93F5-135810D4F370}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8505679-7E8E-438E-BDF5-719FC71B6909}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8505679-7E8E-438E-BDF5-719FC71B6909}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8505679-7E8E-438E-BDF5-719FC71B6909}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8505679-7E8E-438E-BDF5-719FC71B6909}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +45,7 @@ Global
 		{38C94D21-0441-41E8-990A-8E03F3F186F0} = {4217F27A-641D-45B0-9B86-87664A0DD5A6}
 		{C70242FD-1888-4B05-8F41-A56D0D5A42F7} = {4217F27A-641D-45B0-9B86-87664A0DD5A6}
 		{322165DE-B2A8-47CB-93F5-135810D4F370} = {4217F27A-641D-45B0-9B86-87664A0DD5A6}
+		{E8505679-7E8E-438E-BDF5-719FC71B6909} = {4217F27A-641D-45B0-9B86-87664A0DD5A6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ACB64BAD-FA31-4697-BB59-CB8477482985}
