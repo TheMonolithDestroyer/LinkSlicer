@@ -27,6 +27,7 @@ namespace Link.Slicer.Application.Services.UrlService
             if (string.IsNullOrWhiteSpace(path))
                 throw new Exception("Not Found");
 
+            // Создать кастомные Exception
             // Возвращать результат скорее всего
             var shortening = path.Replace(@"/", "");
             var urlEntity = await _context.Urls
