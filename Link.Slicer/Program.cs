@@ -1,9 +1,9 @@
 using Autofac.Extensions.DependencyInjection;
-using Link.Slicer.Database;
 using Serilog;
 using Link.Slicer.Utils;
 using Link.Slicer.Models;
 using Link.Slicer.Middlewares;
+using Link.Slicer.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +20,7 @@ builder.Host.RegisterCustomServices();
 // AppSettings
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection(nameof(AppSettings)));
 // DbContext
-builder.Services.AddAppDbContext(builder.Configuration);
+builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.Configure<RouteOptions>(options =>
 {

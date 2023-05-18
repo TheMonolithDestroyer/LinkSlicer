@@ -1,5 +1,5 @@
-﻿using Link.Slicer.Database;
-using Link.Slicer.Entities;
+﻿using Link.Slicer.Entities;
+using Link.Slicer.Infrastructure.Persistence;
 using Link.Slicer.Queries;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,9 +7,9 @@ namespace Link.Slicer.Repositories
 {
     public class Repository : IRepository
     {
-        private readonly AppDbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly DbSet<Url> _urls;
-        public Repository(AppDbContext context)
+        public Repository(ApplicationDbContext context)
         {
             _context = context ?? throw new ArgumentNullException();
             _urls = _context.Set<Url>() ?? throw new ArgumentNullException();

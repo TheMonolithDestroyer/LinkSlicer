@@ -20,4 +20,8 @@
     <PackageReference Include="UAParser" Version="3.1.47" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Link.Slicer.Infrastructure\Link.Slicer.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
