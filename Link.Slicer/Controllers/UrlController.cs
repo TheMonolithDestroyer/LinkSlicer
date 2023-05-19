@@ -18,16 +18,15 @@ namespace Link.Slicer.Controllers
         [Route("api/[controller]/[action]")]
         public async Task<IActionResult> Create([FromBody]CreateUrlCommandRequest request)
         {
-            var result = await _service.CreateAsync(request);
-            return StatusCode((int)HttpStatusCode.Created, Result.Succeed(result, HttpStatusCode.Created));
+            var result = Result.Succeed(await _service.CreateAsync(request), HttpStatusCode.Created);
+            return StatusCode((int)HttpStatusCode.Created, result);
         }
 
         [HttpGet]
         [Route("/{shortening}")]
         public async Task<IActionResult> Redirect()
         {
-            var result = await _service.RedicrectAsync(Request.Path);
-            return new RedirectResult(result);
+            return Redirect(await _service.GetOriginUrl(Request.Path));
         }
     }
 }

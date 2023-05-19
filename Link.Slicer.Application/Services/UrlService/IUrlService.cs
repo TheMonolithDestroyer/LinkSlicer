@@ -8,7 +8,7 @@ namespace Link.Slicer.Application.Services.UrlService
 {
     public interface IUrlService
     {
-        Task<string> RedicrectAsync(string path);
+        Task<string> GetOriginUrl(string path);
         Task<CreateUrlCommandResponse> CreateAsync(CreateUrlCommandRequest command);
     }
 }

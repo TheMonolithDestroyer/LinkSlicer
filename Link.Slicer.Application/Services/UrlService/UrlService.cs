@@ -1,9 +1,12 @@
 ﻿using Link.Slicer.Application.Common.Helpers;
 using Link.Slicer.Application.Common.Interfaces;
+using Link.Slicer.Application.Exceptions;
+using Link.Slicer.Application.Models;
 using Link.Slicer.Application.Settings;
 using Link.Slicer.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System.Net;
 
 namespace Link.Slicer.Application.Services.UrlService
 {
@@ -22,13 +25,11 @@ namespace Link.Slicer.Application.Services.UrlService
             _settings = settings;
         }
 
-        public async Task<string> RedicrectAsync(string path)
+        public async Task<string> GetOriginUrl(string path)
         {
-            if (string.IsNullOrWhiteSpace(path))
-                throw new Exception("Not Found");
+            if (string.IsNullOrEmpty(path))
+                throw new NotFoundException("Недействительный адрес.");
 
-            // Создать кастомные Exception
-            // Возвращать результат скорее всего
             var shortening = path.Replace(@"/", "");
             var urlEntity = await _context.Urls
                 .Where(i => !i.DeletedAt.HasValue && i.Shortening == shortening)
@@ -36,10 +37,11 @@ namespace Link.Slicer.Application.Services.UrlService
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
 
-            if (urlEntity == null) // Возвращать 404
-                throw new Exception("Not Found");
+            if (urlEntity == null)
+                throw new NotFoundException("Контент или ресурс не найден.");
 
-            return UrlHelper.GenerateLongUrl(urlEntity.Protocol, urlEntity.DomainName, urlEntity.Address);
+            var originalUrl = UrlHelper.GenerateLongUrl(urlEntity.Protocol, urlEntity.DomainName, urlEntity.Address);
+            return originalUrl;
         }
 
 

@@ -2,7 +2,7 @@ using Link.Slicer.Infrastructure;
 using Link.Slicer.Configurations.Middlewares;
 using Link.Slicer.Configurations;
 using Link.Slicer.Application;
-using Link.Slicer.Infrastructure.Settings;
+using Link.Slicer.Application.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection(nameof(AppSettings)));
