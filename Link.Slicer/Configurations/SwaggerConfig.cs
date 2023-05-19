@@ -1,4 +1,4 @@
-﻿using Link.Slicer.Infrastructure.Settings;
+﻿using Link.Slicer.Application.Settings;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
