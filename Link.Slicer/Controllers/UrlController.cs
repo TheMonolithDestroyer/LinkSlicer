@@ -1,7 +1,5 @@
-﻿using Link.Slicer.Application.Models;
-using Link.Slicer.Application.Services.UrlService;
+﻿using Link.Slicer.Application.Services.UrlService;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace Link.Slicer.Controllers
 {
@@ -18,8 +16,8 @@ namespace Link.Slicer.Controllers
         [Route("api/[controller]/[action]")]
         public async Task<IActionResult> Create([FromBody]CreateUrlCommandRequest request)
         {
-            var result = Result.Succeed(await _service.CreateAsync(request), HttpStatusCode.Created);
-            return StatusCode((int)HttpStatusCode.Created, result);
+            var result = await _service.CreateAsync(request);
+            return StatusCode((int)result.StatusCode, result);
         }
 
         [HttpGet]

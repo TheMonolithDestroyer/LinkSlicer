@@ -6,6 +6,7 @@ using Link.Slicer.Application.Settings;
 using Link.Slicer.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System.Net;
 
 namespace Link.Slicer.Application.Services.UrlService
@@ -16,13 +17,16 @@ namespace Link.Slicer.Application.Services.UrlService
     public class UrlService : IUrlService
     {
         private readonly IOptions<AppSettings> _settings;
+        private readonly IApplicationLogger<UrlService> _logger;
         private readonly IApplicationDbContext _context;
         public UrlService(
             IApplicationDbContext context,
-            IOptions<AppSettings> settings)
+            IOptions<AppSettings> settings,
+            IApplicationLogger<UrlService> logger)
         {
             _context = context;
             _settings = settings;
+            _logger = logger;
         }
 
         public async Task<string> GetOriginUrl(string path)
@@ -45,29 +49,22 @@ namespace Link.Slicer.Application.Services.UrlService
         }
 
 
-        public async Task<CreateUrlCommandResponse> CreateAsync(CreateUrlCommandRequest command)
+        public async Task<Result> CreateAsync(CreateUrlCommandRequest command)
         {
             if (command == null)
                 throw new ArgumentNullException(nameof(command));
             if (string.IsNullOrEmpty(command.Url))
-                throw new ArgumentNullException(nameof(command.Url));
+                throw new BadRequestException($"{nameof(command.Url)} обязательное поле.");
             if (string.IsNullOrEmpty(command.Shortening))
-                throw new ArgumentNullException(nameof(command.Shortening));
-
-            // Валидация, если адрес другой, но домен и таргет одинаковые
+                throw new BadRequestException($"{nameof(command.Shortening)} обязательное поле.");
 
             var urlParts = UrlHelper.SplitUrl(command.Url);
-            var entity = await _context.Urls
-                .Where(i => !i.DeletedAt.HasValue &&
-                        (string.IsNullOrEmpty(urlParts["host"]) || !string.IsNullOrEmpty(urlParts["host"]) && i.DomainName == urlParts["host"]) &&
-                        (string.IsNullOrEmpty(command.Shortening) || !string.IsNullOrEmpty(command.Shortening) && i.Address == command.Shortening))
-                .OrderByDescending(i => i.CreatedAt)
-                .AsNoTracking()
-                .FirstOrDefaultAsync();
+            var similarEntityByShortening = await GetByShorteningAsync(command.Shortening);
 
-            if (entity == null)
+            HttpStatusCode statusCode;
+            if (similarEntityByShortening == null)
             {
-                entity = new Url
+                similarEntityByShortening = new Url
                 {
                     Shortening = command.Shortening,
                     Protocol = urlParts["scheme"],
@@ -75,13 +72,43 @@ namespace Link.Slicer.Application.Services.UrlService
                     Address = urlParts["path"] + urlParts["query"],
                     Comment = command.Comment
                 };
+                Insert(similarEntityByShortening);
 
-                _context.Urls.Add(entity);
-                _context.SaveChanges();
+                statusCode = HttpStatusCode.Created;
+            }
+            else
+            {
+                var entityUrl = similarEntityByShortening.DomainName + similarEntityByShortening.Address;
+                var incomingUrl = urlParts["host"] + urlParts["path"] + urlParts["query"];
+                var similarUrlParts = entityUrl == incomingUrl;
+                if (!similarUrlParts)
+                    throw new ConflictException($"URL-адрес с данным сокращением \"{command.Shortening}\" уже существует. Пожалуйста, попробуйте использовать другое сокращение.");
+
+                statusCode = HttpStatusCode.OK;
             }
 
-            var shortUrl = UrlHelper.GenerateShortUrl(_settings.Value.DefaultDomain, entity.Shortening);
-            return new CreateUrlCommandResponse(shortUrl, entity.Comment, entity.CreatedAt);
+            var response = new CreateUrlCommandResponse(
+                UrlHelper.GenerateShortUrl(_settings.Value.DefaultDomain, similarEntityByShortening.Shortening),
+                similarEntityByShortening.Comment,
+                similarEntityByShortening.CreatedAt);
+
+            return Result.Succeed(response, statusCode);
+        }
+
+        private void Insert(Url url)
+        {
+            _context.Urls.Add(url);
+            _context.SaveChanges();
+
+            _logger.LogInformation($"Url created: {JsonConvert.SerializeObject(url)}");
+        }
+
+        private async Task<Url> GetByShorteningAsync(string shortening)
+        {
+            return await _context.Urls
+                .OrderByDescending(i => i.CreatedAt)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(i => !i.DeletedAt.HasValue && i.Shortening == shortening);
         }
     }
 }

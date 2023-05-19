@@ -32,9 +32,21 @@ namespace Link.Slicer.Configurations.Middlewares
                     statusCode = notFoundException.StatusCode;
                     message = notFoundException.Message;
                 }
+                else if (ex is ConflictException conflictException)
+                {
+                    statusCode = conflictException.StatusCode;
+                    message = conflictException.Message;
+                }
+                else if (ex is BadRequestException badRequestException)
+                {
+                    statusCode = badRequestException.StatusCode;
+                    message = badRequestException.Message;
+                }
+
                 var exceptionResult = JsonConvert.SerializeObject(Result.Fail(message, statusCode));
 
-                _logger.LogError(exceptionResult, ex);
+                if (statusCode == HttpStatusCode.InternalServerError)
+                    _logger.LogError(exceptionResult, ex);
 
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = (int)statusCode;
