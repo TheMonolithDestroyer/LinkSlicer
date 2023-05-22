@@ -1,9 +1,12 @@
 ﻿namespace Link.Slicer.Application.Common.Extensions
 {
+    /// <summary>
+    /// An extension class for DateTime methods
+    /// </summary>
     public static class DateTimeExtension
     {
         /// <summary>
-        /// Converts timestamp to DateTime
+        /// Converts timestamp to DateTime.
         /// </summary>
         public static DateTime ToDateTime(this long timestamp)
         {
@@ -14,7 +17,7 @@
         }
 
         /// <summary>
-        /// Converts timestamp to DateTimeOffset
+        /// Converts timestamp to DateTimeOffset.
         /// </summary>
         public static DateTimeOffset ToDateTimeOffset(this long timestamp)
         {
@@ -23,7 +26,7 @@
         }
 
         /// <summary>
-        /// Converts DateTime to timestamp
+        /// Converts DateTime to timestamp.
         /// </summary>
         public static long ToTimestamp(this DateTime dt)
         {
@@ -34,7 +37,7 @@
         }
 
         /// <summary>
-        /// Converts DateTimeOffset to timestamp
+        /// Converts DateTimeOffset to timestamp.
         /// </summary>
         public static long ToTimestamp(this DateTimeOffset dt)
         {
@@ -43,7 +46,7 @@
         }
 
         /// <summary>
-        /// Returns the start of a date
+        /// Returns the start of a date.
         /// </summary>
         public static DateTimeOffset StartOfDate(this DateTimeOffset dt)
         {
@@ -51,7 +54,7 @@
         }
 
         /// <summary>
-        /// Returns the end of a date
+        /// Returns the end of a date.
         /// </summary>
         public static DateTimeOffset EndOfDate(this DateTimeOffset dt)
         {
@@ -59,7 +62,7 @@
         }
 
         /// <summary>
-        /// Returns the start of a date
+        /// Returns the start of a date.
         /// </summary>
         public static DateTime StartOfDate(this DateTime dt)
         {
@@ -67,7 +70,7 @@
         }
 
         /// <summary>
-        /// Returns the end of a date
+        /// Returns the end of a date.
         /// </summary>
         public static DateTime EndOfDate(this DateTime dt)
         {
