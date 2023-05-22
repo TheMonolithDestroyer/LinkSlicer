@@ -63,5 +63,18 @@ namespace Link.Slicer.Infrastructure.Persistence
             var result = await base.SaveChangesAsync(cancellationToken);
             return result;
         }
+
+        public void InsertUrl(Url entity)
+        {
+            Urls.Add(entity);
+        }
+
+        public async Task<Url> GetByShorteningAsync(string shortening)
+        {
+            return await Urls
+                .OrderByDescending(i => i.CreatedAt)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(i => !i.DeletedAt.HasValue && i.Shortening == shortening);
+        }
     }
 }

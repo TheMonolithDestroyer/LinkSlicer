@@ -13,5 +13,7 @@ namespace Link.Slicer.Application.Common.Interfaces
         DbSet<Url> Urls { get; set; }
         int SaveChanges();
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+        void InsertUrl(Url entity);
+        Task<Url> GetByShorteningAsync(string shortening);
     }
 }

@@ -6,7 +6,6 @@ using Link.Slicer.Application.Settings;
 using Link.Slicer.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using System.Net;
 
 namespace Link.Slicer.Application.Services.UrlService
@@ -56,7 +55,7 @@ namespace Link.Slicer.Application.Services.UrlService
                 throw new BadRequestException($"{nameof(command.Shortening)} обязательное поле.");
 
             var urlParts = UrlHelper.SplitUrl(command.Url);
-            var similarEntityByShortening = await GetByShorteningAsync(command.Shortening);
+            var similarEntityByShortening = await _context.GetByShorteningAsync(command.Shortening);
 
             HttpStatusCode statusCode;
             if (similarEntityByShortening == null)
@@ -69,7 +68,8 @@ namespace Link.Slicer.Application.Services.UrlService
                     Address = urlParts["path"] + urlParts["query"],
                     Comment = command.Comment
                 };
-                Insert(similarEntityByShortening);
+                _context.InsertUrl(similarEntityByShortening);
+                _context.SaveChanges();
 
                 statusCode = HttpStatusCode.Created;
             }
@@ -90,22 +90,6 @@ namespace Link.Slicer.Application.Services.UrlService
                 similarEntityByShortening.CreatedAt);
 
             return Result.Succeed(response, statusCode);
-        }
-
-        private void Insert(Url url)
-        {
-            _context.Urls.Add(url);
-            _context.SaveChanges();
-
-            _logger.LogInformation($"Url created: {JsonConvert.SerializeObject(url)}");
-        }
-
-        private async Task<Url> GetByShorteningAsync(string shortening)
-        {
-            return await _context.Urls
-                .OrderByDescending(i => i.CreatedAt)
-                .AsNoTracking()
-                .FirstOrDefaultAsync(i => !i.DeletedAt.HasValue && i.Shortening == shortening);
         }
     }
 }
