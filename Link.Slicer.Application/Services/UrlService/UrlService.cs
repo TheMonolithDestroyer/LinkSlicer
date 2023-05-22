@@ -11,9 +11,6 @@ using System.Net;
 
 namespace Link.Slicer.Application.Services.UrlService
 {
-    public record CreateUrlCommandRequest(string Shortening, string Url, string Comment);
-    public record CreateUrlCommandResponse(string ShortUrl, string Comment, DateTimeOffset CreatedAt);
-
     public class UrlService : IUrlService
     {
         private readonly IOptions<AppSettings> _settings;

@@ -1,4 +1,5 @@
-﻿using Link.Slicer.Application.Services.UrlService;
+﻿using Link.Slicer.Application.Models;
+using Link.Slicer.Application.Services.UrlService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Link.Slicer.Controllers
