@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Link.Slicer.Domain", "Link.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Link.Slicer.Application", "Link.Slicer.Application\Link.Slicer.Application.csproj", "{322165DE-B2A8-47CB-93F5-135810D4F370}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Link.Slicer.Infrastructure", "Link.Slicer.Infrastructure\Link.Slicer.Infrastructure.csproj", "{E8505679-7E8E-438E-BDF5-719FC71B6909}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Link.Slicer.Infrastructure", "Link.Slicer.Infrastructure\Link.Slicer.Infrastructure.csproj", "{E8505679-7E8E-438E-BDF5-719FC71B6909}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Link.Slicer.UnitTests", "Link.Slicer.UnitTests\Link.Slicer.UnitTests.csproj", "{8CDD42C2-161E-4286-B024-3EBB67B4EE05}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{E8505679-7E8E-438E-BDF5-719FC71B6909}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8505679-7E8E-438E-BDF5-719FC71B6909}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8505679-7E8E-438E-BDF5-719FC71B6909}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CDD42C2-161E-4286-B024-3EBB67B4EE05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CDD42C2-161E-4286-B024-3EBB67B4EE05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CDD42C2-161E-4286-B024-3EBB67B4EE05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CDD42C2-161E-4286-B024-3EBB67B4EE05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{C70242FD-1888-4B05-8F41-A56D0D5A42F7} = {4217F27A-641D-45B0-9B86-87664A0DD5A6}
 		{322165DE-B2A8-47CB-93F5-135810D4F370} = {4217F27A-641D-45B0-9B86-87664A0DD5A6}
 		{E8505679-7E8E-438E-BDF5-719FC71B6909} = {4217F27A-641D-45B0-9B86-87664A0DD5A6}
+		{8CDD42C2-161E-4286-B024-3EBB67B4EE05} = {605C9CFE-3D59-47C7-8676-85A2A06CFD99}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ACB64BAD-FA31-4697-BB59-CB8477482985}
